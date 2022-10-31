@@ -28,4 +28,15 @@ const verify = async (
   return response.json();
 };
 
-export { verify };
+const solcVersions = async () => {
+  const url = "/api/v1/solc-versions";
+  const headers = {
+    "content-type": "application/json",
+    accept: "application/json",
+  };
+  const options = { headers };
+  const response = await fetch(url, options);
+  return response.json();
+};
+
+export { verify, solcVersions };

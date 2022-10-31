@@ -93,4 +93,19 @@ const compileExtractCompare = async (
   return processedBlockchainBytecode === processedCompiledBytecode;
 };
 
-export { compileExtractCompare };
+/**
+ * Returns all the solc versions, excluding nightly.
+ */
+const listVersions = async () => {
+  const url =
+    "https://raw.githubusercontent.com/ethereum/solc-bin/gh-pages/bin/list.txt";
+  const response = await fetch(url);
+  const text = await response.text();
+  const allVersions = text.split("\n");
+  const versions = allVersions.filter(
+    (version) => !version.includes("nightly")
+  );
+  return versions;
+};
+
+export { compileExtractCompare, listVersions };
