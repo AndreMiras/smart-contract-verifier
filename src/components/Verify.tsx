@@ -58,9 +58,7 @@ const Verify = ({ solcVersions }: VerifyProps) => {
           contractAddress,
           solcVersion
         );
-        setVerifyStatus(
-          (error && "Error") || (matching && "Matching") || "Not matching"
-        );
+        setVerifyStatus(error ? error : matching ? "Matching" : "Not matching");
       } catch (error: unknown) {
         setVerifyStatus("Error");
         console.error(error);
