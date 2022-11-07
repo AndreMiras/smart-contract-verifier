@@ -14,6 +14,7 @@
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "smart-contract-verifier": "^1.0.0",
     "solc": "^0.8.17",
     "web3": "^1.7.4"
   },

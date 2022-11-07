@@ -1,6 +1,6 @@
 import { ok } from "assert";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { compileExtractCompare } from "../../../lib/libscv";
+import { compileExtractCompare } from "smart-contract-verifier";
 import Web3 from "web3";
 
 type Data = {

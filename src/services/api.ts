@@ -1,3 +1,4 @@
+import { ok } from "assert";
 const verify = async (
   file: File,
   contractName: string,
@@ -5,7 +6,8 @@ const verify = async (
   contractAddress: string,
   solcVersion: string
 ) => {
-  const url = "/api/v1/verify";
+  const url = process.env.NEXT_PUBLIC_VERIFY_ENDPOINT;
+  ok(url);
   const headers = {
     "content-type": "application/json",
     accept: "application/json",
@@ -29,7 +31,8 @@ const verify = async (
 };
 
 const solcVersions = async () => {
-  const url = "/api/v1/solc-versions";
+  const url = process.env.NEXT_PUBLIC_SOLC_VERSIONS_ENDPOINT;
+  ok(url);
   const headers = {
     "content-type": "application/json",
     accept: "application/json",

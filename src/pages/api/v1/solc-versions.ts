@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { listVersions } from "../../../lib/libscv";
+import { listVersions } from "smart-contract-verifier";
 
 type Data = {
   versions: string[];
