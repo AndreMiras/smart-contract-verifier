@@ -1,14 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import * as api from "../services/api";
 
-const Verify = () => {
+interface VerifyProps {
+  solcVersions: string[];
+}
+
+const Verify = ({ solcVersions }: VerifyProps) => {
   const [verifyStatus, setVerifyStatus] = useState<string>("N/A");
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File>();
   const [contractName, setContractName] = useState<string>("");
   const [contractFilename, setContractFilename] = useState<string>("");
   const [contractAddress, setContractAddress] = useState<string>("");
-  const [solcVersions, setSolcVersions] = useState<string[]>(["loading..."]);
   const [solcVersion, setSolcVersion] = useState<string>("");
 
   const onFile = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -32,16 +35,6 @@ const Verify = () => {
 
   const fileStem = (file: string) => file.slice(0, -".sol".length);
 
-  // load the list of solc versions
-  useEffect(() => {
-    const loadVersions = async () => {
-      const { versions } = await api.solcVersions();
-      setSolcVersions(versions);
-      setSolcVersion(extractVersion(versions[0]));
-    };
-    loadVersions();
-  }, []);
-
   // update contractName and contractFilename on file update
   useEffect(() => {
     if (!file) return;
@@ -58,14 +51,16 @@ const Verify = () => {
     if (file) {
       setLoading(true);
       try {
-        const { matching } = await api.verify(
+        const { matching, error } = await api.verify(
           file,
           contractName,
           contractFilename,
           contractAddress,
           solcVersion
         );
-        setVerifyStatus((matching && "Matching") || "Not matching");
+        setVerifyStatus(
+          (error && "Error") || (matching && "Matching") || "Not matching"
+        );
       } catch (error: unknown) {
         setVerifyStatus("Error");
         console.error(error);
@@ -124,4 +119,5 @@ const Verify = () => {
   );
 };
 
+export type { VerifyProps };
 export default Verify;

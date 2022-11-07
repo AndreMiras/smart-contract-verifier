@@ -30,16 +30,4 @@ const verify = async (
   return response.json();
 };
 
-const solcVersions = async () => {
-  const url = process.env.NEXT_PUBLIC_SOLC_VERSIONS_ENDPOINT;
-  ok(url);
-  const headers = {
-    "content-type": "application/json",
-    accept: "application/json",
-  };
-  const options = { headers };
-  const response = await fetch(url, options);
-  return response.json();
-};
-
-export { verify, solcVersions };
+export { verify };

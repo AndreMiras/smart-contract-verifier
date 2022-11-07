@@ -1,9 +1,26 @@
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { listVersions } from "smart-contract-verifier";
 import styles from "../styles/Home.module.css";
-import Verify from "../components/Verify";
+import Verify, { VerifyProps } from "../components/Verify";
 
-const Home = () => {
+interface HomeProps {
+  solcVersions: string[];
+}
+
+const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  const solcVersions = await listVersions();
+  const hour = 60 * 60;
+  return {
+    props: {
+      solcVersions,
+    },
+    revalidate: 24 * hour,
+  };
+};
+
+const Home = ({ solcVersions }: HomeProps) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -20,7 +37,7 @@ const Home = () => {
         </p>
 
         <div className={styles.grid}>
-          <Verify />
+          <Verify solcVersions={solcVersions} />
         </div>
       </main>
 
@@ -40,4 +57,5 @@ const Home = () => {
   );
 };
 
+export { getStaticProps };
 export default Home;
